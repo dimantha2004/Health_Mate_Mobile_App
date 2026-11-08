@@ -7,6 +7,7 @@ import '../../../core/widgets/state_views.dart';
 import '../../goals/viewmodel/goals_provider.dart';
 import '../../health_records/view/health_metric.dart';
 import '../../health_records/viewmodel/health_records_provider.dart';
+import 'widgets/weekly_chart.dart';
 
 /// Summary of today's activity: the totals of every record dated today.
 class DashboardScreen extends StatelessWidget {
@@ -112,6 +113,8 @@ class DashboardScreen extends StatelessWidget {
                   : 'Totals include every record dated today.'),
             ),
           ),
+          const SizedBox(height: 16),
+          WeeklyChart(days: provider.lastSevenDays, goals: goals),
         ],
       ),
     );

@@ -49,6 +49,15 @@ void main() {
     expect(provider.todaySummary!.water, 250);
   });
 
+  test('lastSevenDays has 7 days ending today', () async {
+    await provider.load();
+    expect(provider.lastSevenDays, hasLength(7));
+    expect(provider.lastSevenDays.last.date, today());
+    final t = today();
+    expect(provider.lastSevenDays.first.date,
+        DateTime(t.year, t.month, t.day - 6));
+  });
+
   test('update and delete are reflected in the list', () async {
     await provider.addRecord(record(today()));
     final saved = provider.records.single;

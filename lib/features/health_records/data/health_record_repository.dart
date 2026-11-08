@@ -73,23 +73,42 @@ class HealthRecordRepository {
   }
 
   /// Sums every record on [date]. Returns zeros when there are none.
-  Future<DailySummary> getDailySummary(DateTime date) async {
+  Future<DailySummary> getDailySummary(DateTime date) async =>
+      (await getDailySummaries(date, date)).single;
+
+  /// One summary per day from [from] to [to] (inclusive), oldest first.
+  /// Days without records are included with zero totals, so charts always
+  /// get a complete series.
+  Future<List<DailySummary>> getDailySummaries(
+      DateTime from, DateTime to) async {
     final db = await _databaseHelper.database;
     final rows = await db.rawQuery('''
-      SELECT COALESCE(SUM(steps), 0)    AS steps,
-             COALESCE(SUM(calories), 0) AS calories,
-             COALESCE(SUM(water), 0)    AS water,
-             COUNT(*)                   AS entries
+      SELECT date,
+             SUM(steps)    AS steps,
+             SUM(calories) AS calories,
+             SUM(water)    AS water,
+             COUNT(*)      AS entries
       FROM $_table
-      WHERE date = ?
-    ''', [toDbDate(date)]);
-    final row = rows.single;
-    return DailySummary(
-      date: date,
-      steps: row['steps'] as int,
-      calories: row['calories'] as int,
-      water: row['water'] as int,
-      entryCount: row['entries'] as int,
-    );
+      WHERE date BETWEEN ? AND ?
+      GROUP BY date
+    ''', [toDbDate(from), toDbDate(to)]);
+    final byDate = {for (final row in rows) row['date'] as String: row};
+
+    return [
+      // DateTime(y, m, d + 1) steps one calendar day, safe across DST.
+      for (var day = from;
+          !day.isAfter(to);
+          day = DateTime(day.year, day.month, day.day + 1))
+        _toSummary(day, byDate[toDbDate(day)]),
+    ];
   }
+
+  static DailySummary _toSummary(DateTime date, Map<String, Object?>? row) =>
+      DailySummary(
+        date: date,
+        steps: row?['steps'] as int? ?? 0,
+        calories: row?['calories'] as int? ?? 0,
+        water: row?['water'] as int? ?? 0,
+        entryCount: row?['entries'] as int? ?? 0,
+      );
 }

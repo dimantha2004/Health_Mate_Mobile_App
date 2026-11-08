@@ -122,6 +122,23 @@ void main() {
       expect(summary.entryCount, 2);
     });
 
+    test('daily summaries cover every day in the range, oldest first',
+        () async {
+      final days = await repo.getDailySummaries(
+          DateTime(2026, 11, 1), DateTime(2026, 11, 5));
+      expect(days.map((d) => d.date.day), [1, 2, 3, 4, 5]);
+      expect(days.map((d) => d.steps), [1000, 4000, 3000, 0, 5000]);
+      expect(days.map((d) => d.entryCount), [1, 2, 1, 0, 1]);
+    });
+
+    test('daily summaries work across a month boundary', () async {
+      final days = await repo.getDailySummaries(
+          DateTime(2026, 10, 30), DateTime(2026, 11, 2));
+      expect(days.map((d) => d.date),
+          [DateTime(2026, 10, 30), DateTime(2026, 10, 31),
+           DateTime(2026, 11, 1), DateTime(2026, 11, 2)]);
+    });
+
     test('daily summary for a day without records is all zeros', () async {
       final summary = await repo.getDailySummary(DateTime(2026, 11, 4));
       expect(summary.isEmpty, isTrue);

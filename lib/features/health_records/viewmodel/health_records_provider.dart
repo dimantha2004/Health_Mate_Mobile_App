@@ -18,7 +18,7 @@ class HealthRecordsProvider extends ChangeNotifier {
   HealthRecordsProvider(this._repository);
 
   List<HealthRecord> _records = const [];
-  DailySummary? _todaySummary;
+  List<DailySummary> _lastSevenDays = const [];
   bool _isLoading = false;
   String? _loadError;
   DateTime? _filterFrom;
@@ -31,8 +31,13 @@ class HealthRecordsProvider extends ChangeNotifier {
   /// Records matching the current date filter, newest first.
   List<HealthRecord> get records => _records;
 
+  /// Daily totals for the last 7 days ending today, oldest first.
+  /// Empty before the first load completes.
+  List<DailySummary> get lastSevenDays => _lastSevenDays;
+
   /// Totals for today, or null before the first load completes.
-  DailySummary? get todaySummary => _todaySummary;
+  DailySummary? get todaySummary =>
+      _lastSevenDays.isEmpty ? null : _lastSevenDays.last;
 
   bool get isLoading => _isLoading;
 
@@ -43,7 +48,8 @@ class HealthRecordsProvider extends ChangeNotifier {
   DateTime? get filterTo => _filterTo;
   bool get isFiltered => _filterFrom != null || _filterTo != null;
 
-  /// Reloads the record list (with the current filter) and today's summary.
+  /// Reloads the record list (with the current filter) and the daily totals
+  /// for the last 7 days, which include today's summary.
   Future<void> load() async {
     final request = ++_loadRequest;
     _isLoading = true;
@@ -53,10 +59,12 @@ class HealthRecordsProvider extends ChangeNotifier {
     try {
       final records =
           await _repository.getRecords(from: _filterFrom, to: _filterTo);
-      final summary = await _repository.getDailySummary(today());
+      final end = today();
+      final week = await _repository.getDailySummaries(
+          DateTime(end.year, end.month, end.day - 6), end);
       if (request != _loadRequest) return;
       _records = records;
-      _todaySummary = summary;
+      _lastSevenDays = week;
     } catch (error, stack) {
       if (request != _loadRequest) return;
       debugPrint('Failed to load health records: $error\n$stack');
