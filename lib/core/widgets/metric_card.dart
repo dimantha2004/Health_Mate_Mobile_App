@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 
-/// Coloured summary tile: icon, label and a large value.
+/// Coloured summary tile: icon, label and a large value. When [progress] is
+/// given, a ring around the icon fills towards the goal (1.0 = goal reached).
 class MetricCard extends StatelessWidget {
   final IconData icon;
   final Color color;
   final String label;
   final String value;
+  final double? progress;
+  final String? caption;
 
   const MetricCard({
     super.key,
@@ -13,20 +16,43 @@ class MetricCard extends StatelessWidget {
     required this.color,
     required this.label,
     required this.value,
+    this.progress,
+    this.caption,
   });
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final progress = this.progress;
     return Card(
       child: Padding(
         padding: const EdgeInsets.all(16),
         child: Row(
           children: [
-            CircleAvatar(
-              radius: 24,
-              backgroundColor: color.withValues(alpha: 0.15),
-              child: Icon(icon, color: color, size: 26),
+            SizedBox.square(
+              dimension: 60,
+              child: Stack(
+                alignment: Alignment.center,
+                children: [
+                  if (progress != null)
+                    SizedBox.expand(
+                      child: CircularProgressIndicator(
+                        value: progress.clamp(0.0, 1.0),
+                        strokeWidth: 5,
+                        strokeCap: StrokeCap.round,
+                        color: color,
+                        backgroundColor: color.withValues(alpha: 0.15),
+                        semanticsLabel: '$label goal progress',
+                        semanticsValue: '${(progress * 100).round()}%',
+                      ),
+                    ),
+                  CircleAvatar(
+                    radius: 22,
+                    backgroundColor: color.withValues(alpha: 0.15),
+                    child: Icon(icon, color: color, size: 24),
+                  ),
+                ],
+              ),
             ),
             const SizedBox(width: 16),
             Expanded(
@@ -40,6 +66,12 @@ class MetricCard extends StatelessWidget {
                   Text(value,
                       style: theme.textTheme.headlineSmall
                           ?.copyWith(fontWeight: FontWeight.bold)),
+                  if (caption != null) ...[
+                    const SizedBox(height: 2),
+                    Text(caption!,
+                        style: theme.textTheme.bodySmall?.copyWith(
+                            color: theme.colorScheme.onSurfaceVariant)),
+                  ],
                 ],
               ),
             ),

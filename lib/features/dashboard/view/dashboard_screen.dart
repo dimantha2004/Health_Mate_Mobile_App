@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import '../../../core/utils/formatters.dart';
 import '../../../core/widgets/metric_card.dart';
 import '../../../core/widgets/state_views.dart';
+import '../../goals/viewmodel/goals_provider.dart';
 import '../../health_records/view/health_metric.dart';
 import '../../health_records/viewmodel/health_records_provider.dart';
 
@@ -18,6 +19,26 @@ class DashboardScreen extends StatelessWidget {
     return 'Good evening';
   }
 
+  static MetricCard _metricCard(HealthMetric metric, int value, int? goal) {
+    final String? caption;
+    if (goal == null) {
+      caption = null;
+    } else if (value >= goal) {
+      caption = 'Goal of ${metric.format(goal)} reached!';
+    } else {
+      caption = '${(value * 100 / goal).floor()}% of ${metric.format(goal)} '
+          'goal';
+    }
+    return MetricCard(
+      icon: metric.icon,
+      color: metric.color,
+      label: metric.label,
+      value: metric.format(value),
+      progress: goal == null ? null : value / goal,
+      caption: caption,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final provider = context.watch<HealthRecordsProvider>();
@@ -30,14 +51,12 @@ class DashboardScreen extends StatelessWidget {
           : const LoadingView();
     }
 
+    // Goals load separately; the cards simply show no ring until they arrive.
+    final goals = context.watch<GoalsProvider>().goals;
     final cards = [
       for (final metric in HealthMetric.values)
-        MetricCard(
-          icon: metric.icon,
-          color: metric.color,
-          label: metric.label,
-          value: metric.format(metric.ofSummary(summary)),
-        ),
+        _metricCard(metric, metric.ofSummary(summary),
+            goals == null ? null : metric.ofGoals(goals)),
     ];
 
     return RefreshIndicator.adaptive(
