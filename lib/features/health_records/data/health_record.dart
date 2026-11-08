@@ -1,4 +1,4 @@
-import '../../../core/utils/date_format.dart';
+import '../../../core/utils/formatters.dart';
 
 /// One row of the `health_records` table.
 class HealthRecord {

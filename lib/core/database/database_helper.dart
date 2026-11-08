@@ -1,7 +1,7 @@
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
-import '../utils/date_format.dart';
+import '../utils/formatters.dart';
 
 /// Owns the SQLite connection and schema. Queries live in the repositories.
 ///
