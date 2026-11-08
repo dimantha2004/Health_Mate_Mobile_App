@@ -9,7 +9,10 @@ import '../utils/formatters.dart';
 /// tests can use an in-memory database instead of the device file.
 class DatabaseHelper {
   static const databaseName = 'healthmate.db';
-  static const _version = 1;
+  /// Schema history:
+  /// 1 - health_records table.
+  /// 2 - daily_goals table (user-editable daily targets).
+  static const _version = 2;
 
   /// Database file path; defaults to `healthmate.db` in the app's
   /// database folder.
@@ -28,11 +31,29 @@ class DatabaseHelper {
 
   Future<Database> _open() async {
     final file = path ?? join(await getDatabasesPath(), databaseName);
-    return openDatabase(file, version: _version, onCreate: _onCreate);
+    return openDatabase(
+      file,
+      version: _version,
+      onCreate: _onCreate,
+      onUpgrade: _onUpgrade,
+    );
   }
 
-  /// Runs only when the database file does not exist yet.
+  /// Runs only when the database file does not exist yet: builds the latest
+  /// schema directly.
   Future<void> _onCreate(Database db, int version) async {
+    await _createHealthRecordsTable(db);
+    await _createGoalsTable(db);
+    if (seed) await _insertSeedData(db);
+  }
+
+  /// Runs when an existing database has an older schema version. Each step
+  /// only adds what is missing, so users keep all their saved records.
+  Future<void> _onUpgrade(Database db, int oldVersion, int newVersion) async {
+    if (oldVersion < 2) await _createGoalsTable(db);
+  }
+
+  Future<void> _createHealthRecordsTable(Database db) async {
     // Field names and types are exactly those required by the brief.
     // CHECK constraints stop invalid data even if app validation is bypassed.
     await db.execute('''
@@ -48,8 +69,25 @@ class DatabaseHelper {
     // Every list, filter and dashboard query filters or sorts by date.
     await db.execute(
         'CREATE INDEX idx_health_records_date ON health_records(date)');
+  }
 
-    if (seed) await _insertSeedData(db);
+  /// A single-row table (id is always 1) holding the user's daily targets,
+  /// created with sensible defaults.
+  Future<void> _createGoalsTable(Database db) async {
+    await db.execute('''
+      CREATE TABLE daily_goals (
+        id            INTEGER PRIMARY KEY CHECK (id = 1),
+        steps_goal    INTEGER NOT NULL CHECK (steps_goal > 0),
+        calories_goal INTEGER NOT NULL CHECK (calories_goal > 0),
+        water_goal    INTEGER NOT NULL CHECK (water_goal > 0)
+      )
+    ''');
+    await db.insert('daily_goals', {
+      'id': 1,
+      'steps_goal': 10000,
+      'calories_goal': 500,
+      'water_goal': 2500,
+    });
   }
 
   /// Two weeks of demo data ending today, so the dashboard and list have
