@@ -52,7 +52,12 @@ class _WeeklyChartState extends State<WeeklyChart> {
                     ButtonSegment(
                       value: m,
                       icon: Icon(m.icon),
-                      label: Text(m.label.split(' ').first),
+                      // Shrinks instead of wrapping mid-word at large
+                      // system text sizes.
+                      label: FittedBox(
+                        fit: BoxFit.scaleDown,
+                        child: Text(m.label.split(' ').first),
+                      ),
                     ),
                 ],
                 selected: {metric},
@@ -62,73 +67,90 @@ class _WeeklyChartState extends State<WeeklyChart> {
             ),
             const SizedBox(height: 20),
             Semantics(
-              label: '${metric.label} for the last 7 days: '
+              label:
+                  '${metric.label} for the last 7 days: '
                   '${values.map(metric.format).join(', ')}',
               excludeSemantics: true,
-              child: SizedBox(
-                height: 200,
-                child: BarChart(
-                  BarChartData(
-                    maxY: maxY == 0 ? 1 : maxY,
-                    barGroups: [
-                      for (var i = 0; i < values.length; i++)
-                        BarChartGroupData(x: i, barRods: [
-                          BarChartRodData(
-                            toY: values[i].toDouble(),
-                            color: metric.color,
-                            width: 20,
-                            borderRadius: const BorderRadius.vertical(
-                                top: Radius.circular(6)),
+              // Seven day labels must fit under seven bars, so their text
+              // scaling is capped; exact values are in the tooltips and
+              // the screen-reader label above.
+              child: MediaQuery.withClampedTextScaling(
+                maxScaleFactor: 1.3,
+                child: SizedBox(
+                  height: 200,
+                  child: BarChart(
+                    BarChartData(
+                      maxY: maxY == 0 ? 1 : maxY,
+                      barGroups: [
+                        for (var i = 0; i < values.length; i++)
+                          BarChartGroupData(
+                            x: i,
+                            barRods: [
+                              BarChartRodData(
+                                toY: values[i].toDouble(),
+                                color: metric.color,
+                                width: 20,
+                                borderRadius: const BorderRadius.vertical(
+                                  top: Radius.circular(6),
+                                ),
+                              ),
+                            ],
                           ),
-                        ]),
-                    ],
-                    titlesData: FlTitlesData(
-                      leftTitles: const AxisTitles(),
-                      rightTitles: const AxisTitles(),
-                      topTitles: const AxisTitles(),
-                      bottomTitles: AxisTitles(
-                        sideTitles: SideTitles(
-                          showTitles: true,
-                          reservedSize: 28,
-                          getTitlesWidget: (value, meta) => Padding(
-                            padding: const EdgeInsets.only(top: 6),
-                            child: Text(
-                              value.toInt() == widget.days.length - 1
-                                  ? 'Today'
-                                  : DateFormat('E')
-                                      .format(widget.days[value.toInt()].date),
-                              style: theme.textTheme.bodySmall,
+                      ],
+                      titlesData: FlTitlesData(
+                        leftTitles: const AxisTitles(),
+                        rightTitles: const AxisTitles(),
+                        topTitles: const AxisTitles(),
+                        bottomTitles: AxisTitles(
+                          sideTitles: SideTitles(
+                            showTitles: true,
+                            reservedSize: 28,
+                            getTitlesWidget: (value, meta) => Padding(
+                              padding: const EdgeInsets.only(top: 6),
+                              child: Text(
+                                value.toInt() == widget.days.length - 1
+                                    ? 'Today'
+                                    : DateFormat(
+                                        'E',
+                                      ).format(widget.days[value.toInt()].date),
+                                style: theme.textTheme.bodySmall,
+                              ),
                             ),
                           ),
                         ),
                       ),
-                    ),
-                    gridData: const FlGridData(show: false),
-                    borderData: FlBorderData(show: false),
-                    extraLinesData: ExtraLinesData(horizontalLines: [
-                      if (goal != null)
-                        HorizontalLine(
-                          y: goal.toDouble(),
-                          color: metric.color.withValues(alpha: 0.6),
-                          strokeWidth: 1.5,
-                          dashArray: [6, 4],
-                          label: HorizontalLineLabel(
-                            show: true,
-                            alignment: Alignment.topRight,
-                            style: theme.textTheme.labelSmall
-                                ?.copyWith(color: metric.color),
-                            labelResolver: (_) => 'Goal',
-                          ),
-                        ),
-                    ]),
-                    barTouchData: BarTouchData(
-                      touchTooltipData: BarTouchTooltipData(
-                        getTooltipColor: (_) =>
-                            theme.colorScheme.inverseSurface,
-                        getTooltipItem: (group, groupIndex, rod, rodIndex) =>
-                            BarTooltipItem(
-                          metric.format(rod.toY.round()),
-                          TextStyle(color: theme.colorScheme.onInverseSurface),
+                      gridData: const FlGridData(show: false),
+                      borderData: FlBorderData(show: false),
+                      extraLinesData: ExtraLinesData(
+                        horizontalLines: [
+                          if (goal != null)
+                            HorizontalLine(
+                              y: goal.toDouble(),
+                              color: metric.color.withValues(alpha: 0.6),
+                              strokeWidth: 1.5,
+                              dashArray: [6, 4],
+                              label: HorizontalLineLabel(
+                                show: true,
+                                alignment: Alignment.topRight,
+                                style: theme.textTheme.labelSmall?.copyWith(
+                                  color: metric.color,
+                                ),
+                                labelResolver: (_) => 'Goal',
+                              ),
+                            ),
+                        ],
+                      ),
+                      barTouchData: BarTouchData(
+                        touchTooltipData: BarTouchTooltipData(
+                          getTooltipColor: (_) =>
+                              theme.colorScheme.inverseSurface,
+                          getTooltipItem: (group, groupIndex, rod, rodIndex) =>
+                              BarTooltipItem(
+                                metric.format(rod.toY.round()),
+                                TextStyle(
+                                  color: theme.colorScheme.onInverseSurface,
+                                ),
+                              ),
                         ),
                       ),
                     ),
@@ -137,9 +159,12 @@ class _WeeklyChartState extends State<WeeklyChart> {
               ),
             ),
             const SizedBox(height: 12),
-            Text('Daily average: ${metric.format(average)}',
-                style: theme.textTheme.bodyMedium
-                    ?.copyWith(color: theme.colorScheme.onSurfaceVariant)),
+            Text(
+              'Daily average: ${metric.format(average)}',
+              style: theme.textTheme.bodyMedium?.copyWith(
+                color: theme.colorScheme.onSurfaceVariant,
+              ),
+            ),
           ],
         ),
       ),
