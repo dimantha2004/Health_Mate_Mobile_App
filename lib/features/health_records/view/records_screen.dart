@@ -71,11 +71,7 @@ class RecordsScreen extends StatelessWidget {
           itemCount: records.length + 1,
           separatorBuilder: (_, _) => const SizedBox(height: 8),
           itemBuilder: (context, index) {
-            if (index == 0) {
-              final n = records.length;
-              return Text('$n ${n == 1 ? 'record' : 'records'}',
-                  style: Theme.of(context).textTheme.labelLarge);
-            }
+            if (index == 0) return _RecordCount(records.length);
             final record = records[index - 1];
             return Dismissible(
               key: ValueKey(record.id),
@@ -99,6 +95,21 @@ class RecordsScreen extends StatelessWidget {
       ],
     );
   }
+}
+
+/// "16 records". A separate widget so it reads the theme from its own
+/// context: the list builder's context is not rebuilt when the system
+/// switches between light and dark mode, which left this text unreadable.
+class _RecordCount extends StatelessWidget {
+  final int count;
+
+  const _RecordCount(this.count);
+
+  @override
+  Widget build(BuildContext context) => Text(
+        '$count ${count == 1 ? 'record' : 'records'}',
+        style: Theme.of(context).textTheme.labelLarge,
+      );
 }
 
 class _DeleteBackground extends StatelessWidget {
