@@ -27,6 +27,13 @@ void main() {
       expect(check('-1'), 'Steps cannot be negative');
       expect(check('100001'), 'Steps must be 100,000 or less');
     });
+
+    test('enforces a minimum when one is given', () {
+      String? goal(String v) =>
+          validateWholeNumber(v, label: 'Steps goal', max: 100000, min: 1);
+      expect(goal('0'), 'Steps goal must be at least 1');
+      expect(goal('1'), isNull);
+    });
   });
 
   group('validateRecordDate', () {

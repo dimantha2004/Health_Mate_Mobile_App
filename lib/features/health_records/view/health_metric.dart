@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../core/utils/formatters.dart';
+import '../../goals/data/daily_goals.dart';
 import '../data/daily_summary.dart';
 import '../data/health_record.dart';
 
@@ -56,6 +57,12 @@ enum HealthMetric {
         steps => summary.steps,
         calories => summary.calories,
         water => summary.water,
+      };
+
+  int ofGoals(DailyGoals goals) => switch (this) {
+        steps => goals.steps,
+        calories => goals.calories,
+        water => goals.water,
       };
 
   /// "7,850 steps", "420 kcal", "2,000 ml"

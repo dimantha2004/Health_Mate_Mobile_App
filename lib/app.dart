@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'core/theme/app_theme.dart';
 import 'features/dashboard/view/dashboard_screen.dart';
+import 'features/goals/view/goals_screen.dart';
 import 'features/health_records/view/record_form_screen.dart';
 import 'features/health_records/view/records_screen.dart';
 
@@ -30,7 +31,8 @@ class HomeShell extends StatefulWidget {
 class _HomeShellState extends State<HomeShell> {
   int _tab = 0;
 
-  static const _titles = ['HealthMate', 'Health Records'];
+  static const _titles = ['HealthMate', 'Health Records', 'Goals'];
+  static const _goalsTab = 2;
 
   @override
   Widget build(BuildContext context) {
@@ -39,17 +41,19 @@ class _HomeShellState extends State<HomeShell> {
       body: SafeArea(
         child: IndexedStack(
           index: _tab,
-          children: const [DashboardScreen(), RecordsScreen()],
+          children: const [DashboardScreen(), RecordsScreen(), GoalsScreen()],
         ),
       ),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: () => Navigator.push(
-          context,
-          MaterialPageRoute(builder: (_) => const RecordFormScreen()),
-        ),
-        icon: const Icon(Icons.add_rounded),
-        label: const Text('Add record'),
-      ),
+      floatingActionButton: _tab == _goalsTab
+          ? null
+          : FloatingActionButton.extended(
+              onPressed: () => Navigator.push(
+                context,
+                MaterialPageRoute(builder: (_) => const RecordFormScreen()),
+              ),
+              icon: const Icon(Icons.add_rounded),
+              label: const Text('Add record'),
+            ),
       bottomNavigationBar: NavigationBar(
         selectedIndex: _tab,
         onDestinationSelected: (index) => setState(() => _tab = index),
@@ -63,6 +67,11 @@ class _HomeShellState extends State<HomeShell> {
             icon: Icon(Icons.list_alt_outlined),
             selectedIcon: Icon(Icons.list_alt_rounded),
             label: 'Records',
+          ),
+          NavigationDestination(
+            icon: Icon(Icons.flag_outlined),
+            selectedIcon: Icon(Icons.flag_rounded),
+            label: 'Goals',
           ),
         ],
       ),
