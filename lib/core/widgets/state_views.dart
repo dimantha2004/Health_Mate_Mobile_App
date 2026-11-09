@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-/// Centred icon + title + message, used when there is nothing to show.
 class EmptyState extends StatelessWidget {
   final IconData icon;
   final String title;
@@ -41,7 +40,6 @@ class EmptyState extends StatelessWidget {
   }
 }
 
-/// Shown when loading failed, with a button to try again.
 class ErrorView extends StatelessWidget {
   final String message;
   final VoidCallback onRetry;
@@ -61,7 +59,6 @@ class ErrorView extends StatelessWidget {
       );
 }
 
-/// Adaptive spinner: Material on Android, Cupertino on iOS.
 class LoadingView extends StatelessWidget {
   const LoadingView({super.key});
 

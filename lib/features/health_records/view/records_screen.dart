@@ -9,8 +9,6 @@ import 'record_form_screen.dart';
 import 'widgets/date_filter_bar.dart';
 import 'widgets/record_card.dart';
 
-/// Health Record List: all past records, newest first, searchable by date.
-/// Tap a record to edit it; swipe it left to delete it.
 class RecordsScreen extends StatelessWidget {
   const RecordsScreen({super.key});
 
@@ -21,8 +19,6 @@ class RecordsScreen extends StatelessWidget {
     );
   }
 
-  /// Runs the delete itself and returns false: the provider reload removes
-  /// the card from the list, and on failure the card slides back.
   Future<bool> _confirmSwipeDelete(
       BuildContext context, HealthRecord record) async {
     if (!await confirmDelete(context) || !context.mounted) return false;
@@ -66,7 +62,6 @@ class RecordsScreen extends StatelessWidget {
       body = RefreshIndicator.adaptive(
         onRefresh: provider.load,
         child: ListView.separated(
-          // Leaves room so the last card is not hidden behind the add button.
           padding: const EdgeInsets.fromLTRB(16, 4, 16, 88),
           itemCount: records.length + 1,
           separatorBuilder: (_, _) => const SizedBox(height: 8),
@@ -97,9 +92,6 @@ class RecordsScreen extends StatelessWidget {
   }
 }
 
-/// "16 records". A separate widget so it reads the theme from its own
-/// context: the list builder's context is not rebuilt when the system
-/// switches between light and dark mode, which left this text unreadable.
 class _RecordCount extends StatelessWidget {
   final int count;
 

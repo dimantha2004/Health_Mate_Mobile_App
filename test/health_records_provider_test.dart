@@ -36,7 +36,7 @@ void main() {
     expect(provider.loadError, isNull);
     expect(provider.records, isEmpty);
     expect(provider.todaySummary!.isEmpty, isTrue);
-    expect(notifications, 2); // loading started, loading finished
+    expect(notifications, 2);
   });
 
   test('adding a record refreshes the list and today summary', () async {
@@ -90,7 +90,6 @@ void main() {
   });
 
   group('when the database fails', () {
-    // Dropping the table makes every real query throw a DatabaseException.
     setUp(() async {
       await (await helper.database).execute('DROP TABLE health_records');
     });

@@ -1,16 +1,12 @@
 import '../../../core/utils/formatters.dart';
 
-/// One row of the `health_records` table.
 class HealthRecord {
-  /// Null until the record has been inserted into the database.
   final int? id;
   final DateTime date;
   final int steps;
 
-  /// Calories burned, in kcal.
   final int calories;
 
-  /// Water intake, in ml.
   final int water;
 
   const HealthRecord({
@@ -29,7 +25,6 @@ class HealthRecord {
         water: map['water'] as int,
       );
 
-  /// Column map for sqflite. `id` is left out when null so SQLite assigns it.
   Map<String, Object?> toMap() => {
         if (id != null) 'id': id,
         'date': toDbDate(date),

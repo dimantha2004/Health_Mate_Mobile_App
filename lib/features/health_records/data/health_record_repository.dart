@@ -3,7 +3,6 @@ import '../../../core/utils/formatters.dart';
 import 'daily_summary.dart';
 import 'health_record.dart';
 
-/// Thrown when an update or delete targets a record that no longer exists.
 class RecordNotFoundException implements Exception {
   final int id;
   const RecordNotFoundException(this.id);
@@ -12,8 +11,6 @@ class RecordNotFoundException implements Exception {
   String toString() => 'Health record $id was not found.';
 }
 
-/// All SQL for the `health_records` table. Every query uses `?` arguments,
-/// never string concatenation, so user input cannot inject SQL.
 class HealthRecordRepository {
   static const _table = 'health_records';
 
@@ -21,8 +18,6 @@ class HealthRecordRepository {
 
   HealthRecordRepository(this._databaseHelper);
 
-  /// Records newest first. Pass [from] and/or [to] (inclusive) to filter by
-  /// date; pass the same day for both to get a single date.
   Future<List<HealthRecord>> getRecords({DateTime? from, DateTime? to}) async {
     final db = await _databaseHelper.database;
     final where = <String>[];
@@ -44,7 +39,6 @@ class HealthRecordRepository {
     return rows.map(HealthRecord.fromMap).toList();
   }
 
-  /// Inserts [record] and returns it with the id SQLite assigned.
   Future<HealthRecord> insert(HealthRecord record) async {
     final db = await _databaseHelper.database;
     final id = await db.insert(_table, record.toMap()..remove('id'));
@@ -72,13 +66,9 @@ class HealthRecordRepository {
     if (deleted == 0) throw RecordNotFoundException(id);
   }
 
-  /// Sums every record on [date]. Returns zeros when there are none.
   Future<DailySummary> getDailySummary(DateTime date) async =>
       (await getDailySummaries(date, date)).single;
 
-  /// One summary per day from [from] to [to] (inclusive), oldest first.
-  /// Days without records are included with zero totals, so charts always
-  /// get a complete series.
   Future<List<DailySummary>> getDailySummaries(
       DateTime from, DateTime to) async {
     final db = await _databaseHelper.database;
@@ -95,7 +85,6 @@ class HealthRecordRepository {
     final byDate = {for (final row in rows) row['date'] as String: row};
 
     return [
-      // DateTime(y, m, d + 1) steps one calendar day, safe across DST.
       for (var day = from;
           !day.isAfter(to);
           day = DateTime(day.year, day.month, day.day + 1))

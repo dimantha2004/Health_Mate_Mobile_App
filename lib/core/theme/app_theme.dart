@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 
-/// Material 3 theme for HealthMate, generated from one seed colour so every
-/// component (buttons, navigation bar, dialogs) uses a consistent palette.
 class AppTheme {
   AppTheme._();
 
-  static const _seed = Color(0xFF00897B); // teal: calm, health-related
+  static const _seed = Color(0xFF00897B);
 
   static ThemeData light() => _build(Brightness.light);
   static ThemeData dark() => _build(Brightness.dark);

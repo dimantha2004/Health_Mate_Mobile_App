@@ -9,7 +9,6 @@ import '../data/health_record.dart';
 import '../viewmodel/health_records_provider.dart';
 import 'health_metric.dart';
 
-/// Add a new health record, or edit [record] when one is given.
 class RecordFormScreen extends StatefulWidget {
   final HealthRecord? record;
 
@@ -38,7 +37,6 @@ class _RecordFormScreenState extends State<RecordFormScreen> {
   bool _saving = false;
   String? _formError;
 
-  /// Errors appear only after the first Save, then update as the user types.
   AutovalidateMode _autovalidate = AutovalidateMode.disabled;
 
   @override
@@ -55,7 +53,7 @@ class _RecordFormScreenState extends State<RecordFormScreen> {
       context: context,
       initialDate: _date,
       firstDate: DateTime(2000),
-      lastDate: today(), // future dates cannot be selected
+      lastDate: today(),
       helpText: 'Select record date',
     );
     if (picked == null) return;
@@ -137,7 +135,6 @@ class _RecordFormScreenState extends State<RecordFormScreen> {
       ),
       body: SafeArea(
         child: Center(
-          // Keeps the form a comfortable width on tablets and landscape.
           child: ConstrainedBox(
             constraints: const BoxConstraints(maxWidth: 600),
             child: Form(

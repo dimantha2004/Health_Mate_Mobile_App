@@ -4,8 +4,6 @@ import 'package:provider/provider.dart';
 import '../../../../core/utils/formatters.dart';
 import '../../viewmodel/health_records_provider.dart';
 
-/// Buttons to search records by one date or a date range, plus a removable
-/// chip showing the active filter.
 class DateFilterBar extends StatelessWidget {
   const DateFilterBar({super.key});
 

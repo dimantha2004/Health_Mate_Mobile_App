@@ -3,8 +3,6 @@ import 'package:flutter/foundation.dart';
 import '../data/daily_goals.dart';
 import '../data/goals_repository.dart';
 
-/// ViewModel for the user's daily goals, used by the Goals screen (to edit)
-/// and the Dashboard (to show progress).
 class GoalsProvider extends ChangeNotifier {
   final GoalsRepository _repository;
 
@@ -14,7 +12,6 @@ class GoalsProvider extends ChangeNotifier {
   bool _isLoading = false;
   String? _loadError;
 
-  /// Null until the first load completes.
   DailyGoals? get goals => _goals;
   bool get isLoading => _isLoading;
   String? get loadError => _loadError;
@@ -33,7 +30,6 @@ class GoalsProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  /// Saves [goals]. Returns null on success, or a message for the UI.
   Future<String?> save(DailyGoals goals) async {
     try {
       await _repository.saveGoals(goals);

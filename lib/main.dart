@@ -11,9 +11,6 @@ import 'features/health_records/viewmodel/health_records_provider.dart';
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
 
-  // Dependencies are created once here and passed down (View -> ViewModel ->
-  // Repository -> DatabaseHelper), so each layer only knows the one below it.
-  // Both repositories share one database connection.
   final database = DatabaseHelper();
 
   runApp(

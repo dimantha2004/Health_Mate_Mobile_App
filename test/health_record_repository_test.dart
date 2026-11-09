@@ -5,7 +5,6 @@ import 'package:healthmate/features/health_records/data/health_record.dart';
 import 'package:healthmate/features/health_records/data/health_record_repository.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
-/// Runs the real repository SQL against an in-memory SQLite database.
 void main() {
   late DatabaseHelper helper;
   late HealthRecordRepository repo;

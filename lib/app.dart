@@ -19,12 +19,6 @@ class HealthMateApp extends StatelessWidget {
       );
 }
 
-/// Navigation between the main tabs with a shared "Add record" button.
-///
-/// Follows Material's adaptive navigation guidance: a bottom NavigationBar
-/// on phones in portrait, and a side NavigationRail when the screen is at
-/// least 600dp wide (landscape phones, tablets) so content keeps its height.
-/// IndexedStack keeps each tab's scroll position when switching.
 class HomeShell extends StatefulWidget {
   const HomeShell({super.key});
 
@@ -69,7 +63,6 @@ class _HomeShellState extends State<HomeShell> {
     final wide = MediaQuery.sizeOf(context).width >= 600;
     final showAdd = _tab != _goalsTab;
 
-    // Content stays a readable width instead of stretching edge to edge.
     final content = Center(
       child: ConstrainedBox(
         constraints: const BoxConstraints(maxWidth: 840),

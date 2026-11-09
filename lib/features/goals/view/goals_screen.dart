@@ -9,8 +9,6 @@ import '../../health_records/view/health_metric.dart';
 import '../data/daily_goals.dart';
 import '../viewmodel/goals_provider.dart';
 
-/// Lets the user set a daily target for each metric. The dashboard shows
-/// progress towards these targets.
 class GoalsScreen extends StatelessWidget {
   const GoalsScreen({super.key});
 
@@ -23,7 +21,6 @@ class GoalsScreen extends StatelessWidget {
           ? ErrorView(message: provider.loadError!, onRetry: provider.load)
           : const LoadingView();
     }
-    // A new key when the goals change rebuilds the form with fresh values.
     return _GoalsForm(key: ValueKey(goals), goals: goals);
   }
 }

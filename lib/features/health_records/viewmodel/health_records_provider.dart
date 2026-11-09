@@ -6,12 +6,6 @@ import '../data/daily_summary.dart';
 import '../data/health_record.dart';
 import '../data/health_record_repository.dart';
 
-/// ViewModel shared by the Records list, the Add/Edit form and the Dashboard.
-///
-/// Screens read state from here and call its methods; they never talk to the
-/// repository directly. After every change the data is reloaded from SQLite
-/// and [notifyListeners] rebuilds every screen that is listening, so the list
-/// and dashboard always show what is actually stored.
 class HealthRecordsProvider extends ChangeNotifier {
   final HealthRecordRepository _repository;
 
@@ -24,32 +18,23 @@ class HealthRecordsProvider extends ChangeNotifier {
   DateTime? _filterFrom;
   DateTime? _filterTo;
 
-  /// Increases on every [load]; a slower, older load must not overwrite the
-  /// result of a newer one (e.g. when the filter changes quickly).
   int _loadRequest = 0;
 
-  /// Records matching the current date filter, newest first.
   List<HealthRecord> get records => _records;
 
-  /// Daily totals for the last 7 days ending today, oldest first.
-  /// Empty before the first load completes.
   List<DailySummary> get lastSevenDays => _lastSevenDays;
 
-  /// Totals for today, or null before the first load completes.
   DailySummary? get todaySummary =>
       _lastSevenDays.isEmpty ? null : _lastSevenDays.last;
 
   bool get isLoading => _isLoading;
 
-  /// Message to show instead of the data when loading failed.
   String? get loadError => _loadError;
 
   DateTime? get filterFrom => _filterFrom;
   DateTime? get filterTo => _filterTo;
   bool get isFiltered => _filterFrom != null || _filterTo != null;
 
-  /// Reloads the record list (with the current filter) and the daily totals
-  /// for the last 7 days, which include today's summary.
   Future<void> load() async {
     final request = ++_loadRequest;
     _isLoading = true;
@@ -74,8 +59,6 @@ class HealthRecordsProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  /// Shows only records between [from] and [to] (inclusive). Pass the same
-  /// day for both to show a single date.
   Future<void> setDateFilter(DateTime from, DateTime to) {
     _filterFrom = from;
     _filterTo = to;
@@ -88,7 +71,6 @@ class HealthRecordsProvider extends ChangeNotifier {
     return load();
   }
 
-  // The write methods return null on success, or a message for the UI to show.
 
   Future<String?> addRecord(HealthRecord record) => _write(
       () => _repository.insert(record), 'Could not save the record.');
@@ -104,7 +86,6 @@ class HealthRecordsProvider extends ChangeNotifier {
       await action();
     } catch (error, stack) {
       debugPrint('Health record write failed: $error\n$stack');
-      // Reload anyway so the list drops records that no longer exist.
       await load();
       return _messageFor(error, fallback);
     }

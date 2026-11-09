@@ -8,7 +8,6 @@ import 'package:provider/provider.dart';
 
 void main() {
   Future<void> pumpForm(WidgetTester tester) async {
-    // The database is never opened: validation fails before any save.
     final provider =
         HealthRecordsProvider(HealthRecordRepository(DatabaseHelper()));
     await tester.pumpWidget(ChangeNotifierProvider.value(

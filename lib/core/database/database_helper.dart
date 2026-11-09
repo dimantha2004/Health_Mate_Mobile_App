@@ -3,30 +3,18 @@ import 'package:sqflite/sqflite.dart';
 
 import '../utils/formatters.dart';
 
-/// Owns the SQLite connection and schema. Queries live in the repositories.
-///
-/// One instance is created in `main()` and handed to the repositories, so
-/// tests can use an in-memory database instead of the device file.
 class DatabaseHelper {
   static const databaseName = 'healthmate.db';
-  /// Schema history:
-  /// 1 - health_records table.
-  /// 2 - daily_goals table (user-editable daily targets).
   static const _version = 2;
 
-  /// Database file path; defaults to `healthmate.db` in the app's
-  /// database folder.
   final String? path;
 
-  /// Inserts demo records the first time the database is created.
   final bool seed;
 
   Future<Database>? _database;
 
   DatabaseHelper({this.path, this.seed = true});
 
-  /// Opens the database on first use. Caching the Future (not the Database)
-  /// means concurrent callers share one open call instead of racing.
   Future<Database> get database => _database ??= _open();
 
   Future<Database> _open() async {
@@ -39,23 +27,17 @@ class DatabaseHelper {
     );
   }
 
-  /// Runs only when the database file does not exist yet: builds the latest
-  /// schema directly.
   Future<void> _onCreate(Database db, int version) async {
     await _createHealthRecordsTable(db);
     await _createGoalsTable(db);
     if (seed) await _insertSeedData(db);
   }
 
-  /// Runs when an existing database has an older schema version. Each step
-  /// only adds what is missing, so users keep all their saved records.
   Future<void> _onUpgrade(Database db, int oldVersion, int newVersion) async {
     if (oldVersion < 2) await _createGoalsTable(db);
   }
 
   Future<void> _createHealthRecordsTable(Database db) async {
-    // Field names and types are exactly those required by the brief.
-    // CHECK constraints stop invalid data even if app validation is bypassed.
     await db.execute('''
       CREATE TABLE health_records (
         id       INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -66,13 +48,10 @@ class DatabaseHelper {
         water    INTEGER NOT NULL CHECK (water >= 0)
       )
     ''');
-    // Every list, filter and dashboard query filters or sorts by date.
     await db.execute(
         'CREATE INDEX idx_health_records_date ON health_records(date)');
   }
 
-  /// A single-row table (id is always 1) holding the user's daily targets,
-  /// created with sensible defaults.
   Future<void> _createGoalsTable(Database db) async {
     await db.execute('''
       CREATE TABLE daily_goals (
@@ -90,11 +69,7 @@ class DatabaseHelper {
     });
   }
 
-  /// Two weeks of demo data ending today, so the dashboard and list have
-  /// content on first launch. Today has two entries to show that the
-  /// dashboard adds up multiple records (7,850 steps, 420 kcal, 2,000 ml).
   static const _seedRows = [
-    // [days ago, steps, calories, water ml]
     [0, 4200, 230, 1000],
     [0, 3650, 190, 1000],
     [1, 9120, 480, 2300],
@@ -117,7 +92,6 @@ class DatabaseHelper {
     final now = today();
     final batch = db.batch();
     for (final [daysAgo, steps, calories, water] in _seedRows) {
-      // DateTime(y, m, d - n) handles month boundaries and DST correctly.
       final date = DateTime(now.year, now.month, now.day - daysAgo);
       batch.insert('health_records', {
         'date': toDbDate(date),

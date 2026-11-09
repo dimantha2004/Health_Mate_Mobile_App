@@ -1,7 +1,6 @@
 import '../../../core/database/database_helper.dart';
 import 'daily_goals.dart';
 
-/// Reads and saves the single row of the `daily_goals` table.
 class GoalsRepository {
   final DatabaseHelper _databaseHelper;
 

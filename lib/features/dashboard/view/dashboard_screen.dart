@@ -9,7 +9,6 @@ import '../../health_records/view/health_metric.dart';
 import '../../health_records/viewmodel/health_records_provider.dart';
 import 'widgets/weekly_chart.dart';
 
-/// Summary of today's activity: the totals of every record dated today.
 class DashboardScreen extends StatelessWidget {
   const DashboardScreen({super.key});
 
@@ -52,7 +51,6 @@ class DashboardScreen extends StatelessWidget {
           : const LoadingView();
     }
 
-    // Goals load separately; the cards simply show no ring until they arrive.
     final goals = context.watch<GoalsProvider>().goals;
     final cards = [
       for (final metric in HealthMetric.values)
@@ -70,7 +68,6 @@ class DashboardScreen extends StatelessWidget {
               style: theme.textTheme.headlineSmall
                   ?.copyWith(fontWeight: FontWeight.bold)),
           const SizedBox(height: 16),
-          // One column on phones; three side by side on wide screens.
           LayoutBuilder(
             builder: (context, constraints) => constraints.maxWidth >= 600
                 ? Row(

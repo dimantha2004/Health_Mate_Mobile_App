@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-/// Shows a short message at the bottom of the screen. Error messages use the
-/// theme's error colour so they cannot be mistaken for success.
 void showMessage(BuildContext context, String message, {bool isError = false}) {
   final colors = Theme.of(context).colorScheme;
   ScaffoldMessenger.of(context)
@@ -13,8 +11,6 @@ void showMessage(BuildContext context, String message, {bool isError = false}) {
     ));
 }
 
-/// Asks the user to confirm a delete. Uses the adaptive dialog so it looks
-/// native on both Android (Material) and iOS (Cupertino).
 Future<bool> confirmDelete(BuildContext context) async {
   final confirmed = await showAdaptiveDialog<bool>(
     context: context,

@@ -5,7 +5,6 @@ import '../../../../core/utils/formatters.dart';
 import '../../data/health_record.dart';
 import '../health_metric.dart';
 
-/// One record in the list: a date badge and the three colour-coded values.
 class RecordCard extends StatelessWidget {
   final HealthRecord record;
   final VoidCallback onTap;

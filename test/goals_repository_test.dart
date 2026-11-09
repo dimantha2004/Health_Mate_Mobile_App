@@ -49,7 +49,6 @@ void main() {
     final dir = await Directory.systemTemp.createTemp('healthmate_test');
     final file = join(dir.path, 'v1.db');
 
-    // Build the database exactly as version 1 of the app did.
     final v1 = await openDatabase(file, version: 1, onCreate: (db, _) async {
       await db.execute('CREATE TABLE health_records (id INTEGER PRIMARY KEY '
           'AUTOINCREMENT, date TEXT NOT NULL, steps INTEGER NOT NULL, '
@@ -59,7 +58,6 @@ void main() {
     });
     await v1.close();
 
-    // Opening it with the current helper runs the upgrade.
     final helper = DatabaseHelper(path: file);
     try {
       expect(await (await helper.database).getVersion(), 2);

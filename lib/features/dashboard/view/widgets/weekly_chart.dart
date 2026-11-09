@@ -8,8 +8,6 @@ import '../../../goals/data/daily_goals.dart';
 import '../../../health_records/data/daily_summary.dart';
 import '../../../health_records/view/health_metric.dart';
 
-/// Bar chart of daily totals for the last 7 days, one metric at a time, with
-/// a dashed line at the daily goal. Tap a bar to see its exact value.
 class WeeklyChart extends StatefulWidget {
   final List<DailySummary> days;
   final DailyGoals? goals;
@@ -21,8 +19,6 @@ class WeeklyChart extends StatefulWidget {
 }
 
 class _WeeklyChartState extends State<WeeklyChart> {
-  // Which metric is shown is purely visual, so it stays local widget state
-  // rather than going into a provider.
   HealthMetric _metric = HealthMetric.steps;
 
   @override
@@ -52,8 +48,6 @@ class _WeeklyChartState extends State<WeeklyChart> {
                     ButtonSegment(
                       value: m,
                       icon: Icon(m.icon),
-                      // Shrinks instead of wrapping mid-word at large
-                      // system text sizes.
                       label: FittedBox(
                         fit: BoxFit.scaleDown,
                         child: Text(m.label.split(' ').first),
@@ -71,9 +65,6 @@ class _WeeklyChartState extends State<WeeklyChart> {
                   '${metric.label} for the last 7 days: '
                   '${values.map(metric.format).join(', ')}',
               excludeSemantics: true,
-              // Seven day labels must fit under seven bars, so their text
-              // scaling is capped; exact values are in the tooltips and
-              // the screen-reader label above.
               child: MediaQuery.withClampedTextScaling(
                 maxScaleFactor: 1.3,
                 child: SizedBox(

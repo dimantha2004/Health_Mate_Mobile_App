@@ -1,4 +1,3 @@
-/// The user's daily targets: the single row of the `daily_goals` table.
 class DailyGoals {
   final int steps;
   final int calories;

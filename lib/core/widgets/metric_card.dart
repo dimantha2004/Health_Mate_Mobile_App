@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-/// Coloured summary tile: icon, label and a large value. When [progress] is
-/// given, a ring around the icon fills towards the goal (1.0 = goal reached).
 class MetricCard extends StatelessWidget {
   final IconData icon;
   final Color color;
