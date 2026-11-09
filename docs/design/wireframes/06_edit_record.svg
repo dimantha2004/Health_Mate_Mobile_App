@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="360" height="800" viewBox="0 0 360 800">
+<title>Wireframe – Edit Record</title>
+<rect x="0" y="0" width="360" height="800" fill="#E8E8E8"/>
+<rect x="4" y="4" width="352" height="792" fill="none" stroke="#5F6368" stroke-width="3"/>
+<path d="M38 48 H18 M26 40 L18 48 L26 56" fill="none" stroke="#5F6368" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="52" y="55" font-family="Roboto, 'Segoe UI', Arial, sans-serif" font-size="18" font-weight="700" fill="#5F6368" letter-spacing="0.8">EDIT RECORD</text>
+<rect x="314" y="35" width="26" height="26" fill="none" stroke="#5F6368" stroke-width="2"/>
+<path d="M314 35 L340 61 M340 35 L314 61" fill="none" stroke="#5F6368" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<line x1="4" y1="78" x2="356" y2="78" stroke="#5F6368" stroke-width="2.5" stroke-linecap="round"/>
+<line x1="18" y1="106" x2="318" y2="106" stroke="#5F6368" stroke-width="4" stroke-linecap="round"/>
+<line x1="18" y1="124" x2="248" y2="124" stroke="#5F6368" stroke-width="4" stroke-linecap="round"/>
+<rect x="16" y="150" width="328" height="56" rx="10" fill="none" stroke="#5F6368" stroke-width="2.5"/>
+<rect x="28" y="166" width="24" height="24" fill="none" stroke="#5F6368" stroke-width="2"/>
+<path d="M28 166 L52 190 M52 166 L28 190" fill="none" stroke="#5F6368" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="64" y="173" font-family="Roboto, 'Segoe UI', Arial, sans-serif" font-size="10" font-weight="700" fill="#5F6368" letter-spacing="0.8">DATE</text>
+<line x1="64" y1="190" x2="144" y2="190" stroke="#5F6368" stroke-width="4" stroke-linecap="round"/>
+<path d="M314 175 l7 7 l7 -7" fill="none" stroke="#5F6368" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+<rect x="16" y="226" width="328" height="56" rx="10" fill="none" stroke="#5F6368" stroke-width="2.5"/>
+<rect x="28" y="242" width="24" height="24" fill="none" stroke="#5F6368" stroke-width="2"/>
+<path d="M28 242 L52 266 M52 242 L28 266" fill="none" stroke="#5F6368" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="64" y="249" font-family="Roboto, 'Segoe UI', Arial, sans-serif" font-size="10" font-weight="700" fill="#5F6368" letter-spacing="0.8">STEPS</text>
+<line x1="64" y1="266" x2="144" y2="266" stroke="#5F6368" stroke-width="4" stroke-linecap="round"/>
+<text x="330" y="260" font-family="Roboto, 'Segoe UI', Arial, sans-serif" font-size="11" font-weight="700" fill="#5F6368" text-anchor="end" letter-spacing="0.8">STEPS</text>
+<line x1="28" y1="298" x2="138" y2="298" stroke="#5F6368" stroke-width="3" stroke-linecap="round"/>
+<rect x="16" y="322" width="328" height="56" rx="10" fill="none" stroke="#5F6368" stroke-width="2.5"/>
+<rect x="28" y="338" width="24" height="24" fill="none" stroke="#5F6368" stroke-width="2"/>
+<path d="M28 338 L52 362 M52 338 L28 362" fill="none" stroke="#5F6368" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="64" y="345" font-family="Roboto, 'Segoe UI', Arial, sans-serif" font-size="10" font-weight="700" fill="#5F6368" letter-spacing="0.8">CALORIES BURNED</text>
+<line x1="64" y1="362" x2="144" y2="362" stroke="#5F6368" stroke-width="4" stroke-linecap="round"/>
+<text x="330" y="356" font-family="Roboto, 'Segoe UI', Arial, sans-serif" font-size="11" font-weight="700" fill="#5F6368" text-anchor="end" letter-spacing="0.8">KCAL</text>
+<line x1="28" y1="394" x2="138" y2="394" stroke="#5F6368" stroke-width="3" stroke-linecap="round"/>
+<rect x="16" y="418" width="328" height="56" rx="10" fill="none" stroke="#5F6368" stroke-width="2.5"/>
+<rect x="28" y="434" width="24" height="24" fill="none" stroke="#5F6368" stroke-width="2"/>
+<path d="M28 434 L52 458 M52 434 L28 458" fill="none" stroke="#5F6368" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="64" y="441" font-family="Roboto, 'Segoe UI', Arial, sans-serif" font-size="10" font-weight="700" fill="#5F6368" letter-spacing="0.8">WATER INTAKE</text>
+<line x1="64" y1="458" x2="144" y2="458" stroke="#5F6368" stroke-width="4" stroke-linecap="round"/>
+<text x="330" y="452" font-family="Roboto, 'Segoe UI', Arial, sans-serif" font-size="11" font-weight="700" fill="#5F6368" text-anchor="end" letter-spacing="0.8">ML</text>
+<line x1="28" y1="490" x2="138" y2="490" stroke="#5F6368" stroke-width="3" stroke-linecap="round"/>
+<rect x="16" y="522" width="328" height="52" rx="26" fill="none" stroke="#5F6368" stroke-width="3"/>
+<text x="180" y="553" font-family="Roboto, 'Segoe UI', Arial, sans-serif" font-size="14" font-weight="700" fill="#5F6368" text-anchor="middle" letter-spacing="0.8">SAVE CHANGES</text>
+</svg>

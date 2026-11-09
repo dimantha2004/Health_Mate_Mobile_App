@@ -16,6 +16,12 @@ and see today's progress on a dashboard. All data is stored on the device with S
 - Light and dark theme, large-text support, adaptive layout (bottom bar on phones,
   navigation rail on landscape/tablets)
 
+## Design
+The user flow, low-fidelity wireframes and high-fidelity UI designs are in [`docs/design`](docs/design).
+They are plain SVG files, so they can be opened in a browser or dragged straight into Figma.
+
+![User flow](docs/design/user_flow.svg)
+
 ## Architecture
 MVVM with a feature-based folder structure and Provider for state management.
 

@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="360" height="800" viewBox="0 0 360 800">
+<title>Wireframe – Health Records – no results</title>
+<rect x="0" y="0" width="360" height="800" fill="#E8E8E8"/>
+<rect x="4" y="4" width="352" height="792" fill="none" stroke="#5F6368" stroke-width="3"/>
+<text x="18" y="55" font-family="Roboto, 'Segoe UI', Arial, sans-serif" font-size="18" font-weight="700" fill="#5F6368" letter-spacing="0.8">HEALTH RECORDS</text>
+<line x1="4" y1="78" x2="356" y2="78" stroke="#5F6368" stroke-width="2.5" stroke-linecap="round"/>
+<rect x="14" y="92" width="162" height="40" rx="20" fill="none" stroke="#5F6368" stroke-width="2.5"/>
+<rect x="32" y="103" width="18" height="18" fill="none" stroke="#5F6368" stroke-width="2"/>
+<path d="M32 103 L50 121 M50 103 L32 121" fill="none" stroke="#5F6368" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="60" y="117" font-family="Roboto, 'Segoe UI', Arial, sans-serif" font-size="12" font-weight="700" fill="#5F6368" letter-spacing="0.8">PICK DATE</text>
+<rect x="184" y="92" width="162" height="40" rx="20" fill="none" stroke="#5F6368" stroke-width="2.5"/>
+<rect x="202" y="103" width="18" height="18" fill="none" stroke="#5F6368" stroke-width="2"/>
+<path d="M202 103 L220 121 M220 103 L202 121" fill="none" stroke="#5F6368" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="230" y="117" font-family="Roboto, 'Segoe UI', Arial, sans-serif" font-size="12" font-weight="700" fill="#5F6368" letter-spacing="0.8">DATE RANGE</text>
+<rect x="14" y="142" width="160" height="30" rx="8" fill="none" stroke="#5F6368" stroke-width="2.5"/>
+<text x="26" y="162" font-family="Roboto, 'Segoe UI', Arial, sans-serif" font-size="11" font-weight="700" fill="#5F6368" letter-spacing="0.8">FILTER: DATE</text>
+<path d="M154 151 l8 8 M162 151 l-8 8" fill="none" stroke="#5F6368" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<circle cx="176" cy="326" r="30" fill="none" stroke="#5F6368" stroke-width="3"/>
+<path d="M197 347 L216 366" fill="none" stroke="#5F6368" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="180" y="412" font-family="Roboto, 'Segoe UI', Arial, sans-serif" font-size="14" font-weight="700" fill="#5F6368" text-anchor="middle" letter-spacing="0.8">NO RECORDS FOR THIS DATE</text>
+<line x1="80" y1="438" x2="280" y2="438" stroke="#5F6368" stroke-width="4" stroke-linecap="round"/>
+<line x1="115" y1="456" x2="245" y2="456" stroke="#5F6368" stroke-width="4" stroke-linecap="round"/>
+<rect x="110" y="480" width="140" height="40" rx="20" fill="none" stroke="#5F6368" stroke-width="2.5"/>
+<text x="180" y="505" font-family="Roboto, 'Segoe UI', Arial, sans-serif" font-size="12" font-weight="700" fill="#5F6368" text-anchor="middle" letter-spacing="0.8">CLEAR FILTER</text>
+<rect x="204" y="644" width="140" height="52" rx="14" fill="#E8E8E8" stroke="#5F6368" stroke-width="2.5"/>
+<path d="M218 670 H234 M226 662 V678" fill="none" stroke="#5F6368" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="244" y="675" font-family="Roboto, 'Segoe UI', Arial, sans-serif" font-size="13" font-weight="700" fill="#5F6368" letter-spacing="0.8">ADD RECORD</text>
+<rect x="5" y="715" width="350" height="80" fill="#E8E8E8"/>
+<line x1="4" y1="715" x2="356" y2="715" stroke="#5F6368" stroke-width="2.5" stroke-linecap="round"/>
+<rect x="49" y="733" width="22" height="22" fill="none" stroke="#5F6368" stroke-width="2"/>
+<path d="M49 733 L71 755 M71 733 L49 755" fill="none" stroke="#5F6368" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="60" y="778" font-family="Roboto, 'Segoe UI', Arial, sans-serif" font-size="10" font-weight="700" fill="#5F6368" text-anchor="middle" letter-spacing="0.8">DASHBOARD</text>
+<rect x="150" y="727" width="60" height="34" rx="17" fill="none" stroke="#5F6368" stroke-width="2.5"/>
+<rect x="169" y="733" width="22" height="22" fill="none" stroke="#5F6368" stroke-width="2"/>
+<path d="M169 733 L191 755 M191 733 L169 755" fill="none" stroke="#5F6368" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="180" y="778" font-family="Roboto, 'Segoe UI', Arial, sans-serif" font-size="10" font-weight="700" fill="#5F6368" text-anchor="middle" letter-spacing="0.8">RECORDS</text>
+<rect x="289" y="733" width="22" height="22" fill="none" stroke="#5F6368" stroke-width="2"/>
+<path d="M289 733 L311 755 M311 733 L289 755" fill="none" stroke="#5F6368" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="300" y="778" font-family="Roboto, 'Segoe UI', Arial, sans-serif" font-size="10" font-weight="700" fill="#5F6368" text-anchor="middle" letter-spacing="0.8">GOALS</text>
+</svg>
